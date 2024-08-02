@@ -1,23 +1,26 @@
+// Path: ./components/Message.tsx
 
 import React from 'react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'; 
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+
 interface MessageProps {
   id: number;
-  name: string;
+  username: string;
+  imageSrc: string;
   message: string;
-  timestamp: string; 
-  className: string;
+  timestamp: string;
+  className?: string;
 }
 
-const Message: React.FC<MessageProps> = ({ id, name, message, timestamp, className }) => {
+const Message: React.FC<MessageProps> = ({ id, username, imageSrc, message, timestamp, className }) => {
   const isOdd = id % 2 !== 0;
 
   return (
     <div className={`flex items-start gap-4 ${isOdd ? 'justify-start' : 'justify-end'} ${className}`}>
       {isOdd && (
         <Avatar className="w-8 h-8 border">
-          <AvatarImage src="/placeholder-user.jpg" />
-          <AvatarFallback>{name[0]}</AvatarFallback>
+          <AvatarImage src={imageSrc} />
+          <AvatarFallback>{username?.[0] ?? ''}</AvatarFallback>
         </Avatar>
       )}
       <div
@@ -25,14 +28,14 @@ const Message: React.FC<MessageProps> = ({ id, name, message, timestamp, classNa
           isOdd ? 'bg-muted' : 'bg-primary text-primary-foreground'
         }`}
       >
-        <div className="font-medium">{name}</div>
+        <div className="font-medium">{username}</div>
         <div>{message}</div>
-        <div className="text-xs text-gray-500">{timestamp}</div> 
+        <div className="text-xs text-gray-500">{new Date(timestamp).toLocaleString()}</div>
       </div>
       {!isOdd && (
         <Avatar className="w-8 h-8 border">
-          <AvatarImage src="/placeholder-user.jpg" />
-          <AvatarFallback>{name[0]}</AvatarFallback>
+          <AvatarImage src={imageSrc} />
+          <AvatarFallback>{username?.[0] ?? ''}</AvatarFallback>
         </Avatar>
       )}
     </div>
